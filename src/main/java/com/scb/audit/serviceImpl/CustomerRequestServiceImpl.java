@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.scb.audit.dao.CustomerDataReposatory;
 import com.scb.audit.dao.CustomerErrorRepo;
+import com.scb.audit.dao.MsConfigDataRepo;
 import com.scb.audit.dao.CustomerAuditRepo;
 import com.scb.audit.model.AuditLog;
 import com.scb.audit.model.CustomerRequestData;
@@ -29,20 +30,30 @@ public class CustomerRequestServiceImpl implements CustomerRequestService {
 	private CustomerAuditRepo customerAuditRepo;
 	@Autowired
 	private CustomerErrorRepo customerErrorRepo;
+	@Autowired
+	private MsConfigDataRepo msConfigDataRepo;
 
 	@Override
 	@Transactional
 	public CustomerResponse customerRequestHandleService(CustomerRequestData customerRequestData) {
 		
-		List<CustomerRequestData> customerList = customerDataReposatory
-				.findByCorelationId(customerRequestData.getCorelationId());
-		if (customerList.isEmpty()) {
-			log.info("Unique request");
+		//String isNeedToCheckDuplicateRequest = msConfigDataRepo.retrieveIsDuplicateCheckRequire(customerRequestData.getCustomerRegion(), customerRequestData.getCustomerAccType());
+		String isNeedToCheckDuplicateRequest =msConfigDataRepo.getDuplicateParamValue("ALL", "ALL", "DUP_CHECK");
+		log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>"+isNeedToCheckDuplicateRequest);
+		if(isNeedToCheckDuplicateRequest.equalsIgnoreCase("yes") && isNeedToCheckDuplicateRequest != null ){
+			List<CustomerRequestData> customerList = customerDataReposatory
+					.findByCorelationId(customerRequestData.getCorelationId());
+			if (customerList.isEmpty()) {
+				log.info("Unique request");
+				CustomerRequestData customerRequestDataResponse = customerDataReposatory.save(customerRequestData);
+				return commonMethods.getSuccessResponse(customerRequestDataResponse);
+			} else {
+				log.info("Duplicate request ");
+				return commonMethods.getErrorResponse("Duplicate User");
+			}
+		}else{
 			CustomerRequestData customerRequestDataResponse = customerDataReposatory.save(customerRequestData);
 			return commonMethods.getSuccessResponse(customerRequestDataResponse);
-		} else {
-			log.info("Duplicate request ");
-			return commonMethods.getErrorResponse("Duplicate User");
 		}
 
 	}

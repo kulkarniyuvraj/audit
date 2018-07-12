@@ -2,6 +2,8 @@ package com.scb.audit.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,6 +19,7 @@ public class MsErrorLog {
 	@Column
 	private long uuid;
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long refId;
 	@Column
 	private String transactionType;
