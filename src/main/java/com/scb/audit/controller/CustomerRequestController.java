@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scb.audit.model.AuditLog;
 import com.scb.audit.model.CustomerRequestData;
 import com.scb.audit.model.CustomerResponse;
+import com.scb.audit.model.MsAuditLog;
 import com.scb.audit.model.MsErrorLog;
 import com.scb.audit.service.CustomerRequestService;
 import com.scb.audit.utils.ReceiverConstants;
@@ -33,9 +33,9 @@ public class CustomerRequestController {
 	
 	
 	@RequestMapping(value = ReceiverConstants.CUSTOMER_ADUIT_LOG_URL, method = RequestMethod.POST, produces = { "application/json", "application/xml" })
-	public ResponseEntity<AuditLog> auditLogRequestHandle(@RequestBody AuditLog auditLog) {
-		AuditLog responseAuditLog = customerRequestService.customerAuditRequestHandleService(auditLog);
-		return new ResponseEntity<AuditLog>(responseAuditLog, HttpStatus.OK);
+	public ResponseEntity<MsAuditLog> auditLogRequestHandle(@RequestBody MsAuditLog auditLog) {
+		MsAuditLog responseAuditLog = customerRequestService.customerAuditRequestHandleService(auditLog);
+		return new ResponseEntity<MsAuditLog>(responseAuditLog, HttpStatus.OK);
 	}
 	
 

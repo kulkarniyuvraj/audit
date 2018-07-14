@@ -8,8 +8,8 @@ import lombok.Getter;
 @Component @Getter
 public class CustomerConfig {
 	
-	@Value("${GCG.downStreamURL}")
-	private String downStreamURL;
+	/*@Value("${GCG.downStreamURL}")
+	private String downStreamURL;*/
 	
 
 }

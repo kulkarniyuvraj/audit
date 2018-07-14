@@ -15,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString @XmlRootElement
-public class AuditLog {
+public class MsAuditLog {
 	@Column
 	private long uuid;
 	@Id

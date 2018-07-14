@@ -10,7 +10,7 @@ import com.scb.audit.dao.CustomerDataReposatory;
 import com.scb.audit.dao.CustomerErrorRepo;
 import com.scb.audit.dao.MsConfigDataRepo;
 import com.scb.audit.dao.CustomerAuditRepo;
-import com.scb.audit.model.AuditLog;
+import com.scb.audit.model.MsAuditLog;
 import com.scb.audit.model.CustomerRequestData;
 import com.scb.audit.model.CustomerResponse;
 import com.scb.audit.model.MsErrorLog;
@@ -39,10 +39,10 @@ public class CustomerRequestServiceImpl implements CustomerRequestService {
 		
 		//String isNeedToCheckDuplicateRequest = msConfigDataRepo.retrieveIsDuplicateCheckRequire(customerRequestData.getCustomerRegion(), customerRequestData.getCustomerAccType());
 		String isNeedToCheckDuplicateRequest =msConfigDataRepo.getDuplicateParamValue("ALL", "ALL", "DUP_CHECK");
-		log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>"+isNeedToCheckDuplicateRequest);
+		//log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>"+isNeedToCheckDuplicateRequest);
 		if(isNeedToCheckDuplicateRequest.equalsIgnoreCase("yes") && isNeedToCheckDuplicateRequest != null ){
 			List<CustomerRequestData> customerList = customerDataReposatory
-					.findByCorelationId(customerRequestData.getCorelationId());
+					.findByCorrelationId(customerRequestData.getCorrelationId());
 			if (customerList.isEmpty()) {
 				log.info("Unique request");
 				CustomerRequestData customerRequestDataResponse = customerDataReposatory.save(customerRequestData);
@@ -59,8 +59,8 @@ public class CustomerRequestServiceImpl implements CustomerRequestService {
 	}
 	@Override
 	@Transactional
-	public AuditLog customerAuditRequestHandleService(AuditLog auditLog) {
-		AuditLog auditLogResponse = customerAuditRepo.save(auditLog);
+	public MsAuditLog customerAuditRequestHandleService(MsAuditLog auditLog) {
+		MsAuditLog auditLogResponse = customerAuditRepo.save(auditLog);
 		return auditLogResponse;
 	}
 	@Override

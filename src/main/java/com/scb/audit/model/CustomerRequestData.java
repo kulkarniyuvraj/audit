@@ -33,7 +33,7 @@ public class CustomerRequestData {
 	@Column 
 	private String timeStamp;
 	@Column
-	private long corelationId;
+	private long correlationId;
 	@Column
 	private long transactionId;
 	@Column

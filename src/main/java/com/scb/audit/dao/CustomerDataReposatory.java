@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CustomerDataReposatory extends JpaRepository<CustomerRequestData, Long> {
 	List<CustomerRequestData> findByCustomerNameAndCustomerId(String customername, long customerId);
-	List<CustomerRequestData> findByCorelationId(long corelationId);
+	List<CustomerRequestData> findByCorrelationId(long correlationId);
 	
 
 }
