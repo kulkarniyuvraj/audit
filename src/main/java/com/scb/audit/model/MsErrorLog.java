@@ -16,7 +16,7 @@ import lombok.ToString;
 
 @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString @XmlRootElement
 public class MsErrorLog {
-	@Column
+	@Column(name="transactionId")
 	private long uuid;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

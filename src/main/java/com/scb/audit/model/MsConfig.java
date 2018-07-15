@@ -26,10 +26,10 @@ public class MsConfig {
 	@Column
 	private String country;                                                      
 	@Column
-	private String param_1; 
+	private String validation; 
 	@Column
-	private String param_2;
+	private String field_1;
 	@Column
-	private String param_value;
+	private String value_1;
 	
 }
